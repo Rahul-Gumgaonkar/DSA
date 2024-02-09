@@ -166,9 +166,9 @@ void deleteNode(Node *&head, Node *&tail, int position)
             i++;
         }
         // step2:
-        prev->next = NULL;
-        // step3:
         Node *curr = prev->next;
+        // step3:
+        prev->next = NULL;
         // step4:
         tail = prev;
         // step5:
@@ -247,9 +247,9 @@ int main()
     cout << "head -> " << head->data << endl;
     cout << "tail -> " << tail->data << endl;
 
-    // insertAtSpecificPosition(head, tail, 10, 0);
-    // insertAtSpecificPosition(head, tail, 80, 4);
-    // insertAtSpecificPosition(head, tail, 90, 2);
+    insertAtSpecificPosition(head, tail, 10, 0);
+    insertAtSpecificPosition(head, tail, 80, 4);
+    insertAtSpecificPosition(head, tail, 90, 2);
     insertAtSpecificPosition(head, tail, 100, 6);
     printLinkedList(head);
     cout << endl;

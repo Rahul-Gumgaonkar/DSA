@@ -2,8 +2,9 @@
 
 using namespace std;
 
-void merge(int arr[], int start, int end)
+int merge(int arr[], int start, int end)
 {
+    int c = 0;
     int mid = start + (end - start) / 2;
     int len1 = mid - start + 1;
     int len2 = end - mid;
@@ -16,13 +17,16 @@ void merge(int arr[], int start, int end)
     {
         left[i] = arr[k++];
     }
+
     k = mid + 1;
     for (int i = 0; i < len2; i++)
     {
         right[i] = arr[k++];
     }
 
-    int leftIndex = 0, rightIndex = 0, mainArrayIndex = start;
+    int leftIndex = 0;
+    int rightIndex = 0;
+    int mainArrayIndex = start;
 
     while (leftIndex < len1 && rightIndex < len2)
     {
@@ -30,9 +34,10 @@ void merge(int arr[], int start, int end)
         {
             arr[mainArrayIndex++] = left[leftIndex++];
         }
-        else
+        else if (left[leftIndex] > right[rightIndex])
         {
             arr[mainArrayIndex++] = right[rightIndex++];
+            c += len1 - leftIndex;
         }
     }
 
@@ -44,40 +49,37 @@ void merge(int arr[], int start, int end)
     {
         arr[mainArrayIndex++] = right[rightIndex++];
     }
+    return c;
 }
 
-void MergeSort(int arr[], int start, int end)
+int mergeSort(int arr[], int start, int end)
 {
     if (start >= end)
     {
-        return;
+        return 0;
     }
     int mid = start + (end - start) / 2;
-    MergeSort(arr, start, mid);
-    MergeSort(arr, mid + 1, end);
-    merge(arr, start, end);
+    int c = 0;
+    c += mergeSort(arr, start, mid);
+    c += mergeSort(arr, mid + 1, end);
+    c += merge(arr, start, end);
+    return c;
 }
 
 int main()
 {
-    int arr[] = {38, 27, 43, 3, 9, 20};
-    int size = 6;
-    int start = 0, end = size - 1;
+    int arr[] = {8, 4, 2, 1};
+    int size = 4;
+    int start = 0;
+    int end = size - 1;
+    int c = 0;
+    c = mergeSort(arr, start, end);
 
-    cout << "Before Sorting Array : " << endl;
     for (int i = 0; i < size; i++)
     {
         cout << arr[i] << " ";
     }
-
     cout << endl;
 
-    MergeSort(arr, 0, size);
-    cout << "After Sorting Array : " << endl;
-    for (int i = 0; i < size; i++)
-    {
-        cout << arr[i] << " ";
-    }
-
-    return 0;
+    cout << "No. of Inversion is : " << c << endl;
 }
